@@ -20,24 +20,27 @@ def birth_death_ratio(df, df2):
     birth_death["birth_death_ratio"] = birth_death['Total_Deaths']/birth_death['Total_Births']*100
     data = pd.merge(df_1, birth_death, on = ['CHSI_County_Name', 'CHSI_State_Name'])
     pd.set_option('display.max_columns', None)
-    #print(data.sort_values(by = 'Poverty',ascending=False))
+    print(data.sort_values(by = 'Poverty',ascending=False))
     plt.scatter(x=data['Poverty'], y=data["White"], color="DarkGreen", label="White pop")
     plt.scatter(x=data['Poverty'], y=data["Black"], color="DarkBlue", label="Black pop")
-    #plt.show()
+    plt.show()
 
     dfa = df_1.groupby(["CHSI_State_Name"], as_index=False).agg({"White":"mean", "Black":"mean", "Others":"mean", "Hispanic":"mean", "Poverty":"mean"})
     dfb = birth_death.groupby(["CHSI_State_Name"], as_index=False).agg({"Total_Births":"mean", "Total_Deaths":"mean"})
     final_df = pd.merge(dfa, dfb, on="CHSI_State_Name")
     final_df = final_df.round(2)
-    #print(final_df.sort_values(by=["Poverty"], ascending=False))
-    population_poverty(df_1)
+    print(final_df.sort_values(by=["Poverty"], ascending=False))
+
 
 birth_death_ratio(demographics, measures)
 
 def population_poverty(df):
-    df_2 = df.groupby(["CHSI_State_Name"], as_index=False).agg({"Poverty":"mean", "Population_Size":"mean"})
-    df_2["Pop_Death_ratio"] = df_2.loc((df_2["Population_Size"]/df_2["Poverty"]).round(2))
-    print(df_2)
+    df1 = df[["CHSI_State_Name", "Poverty", "Population_Size"]]
+    df1 = df1[df1["Poverty"]>=0]
+    df_2 = df1.groupby(["CHSI_State_Name"], as_index=False).agg({"Population_Size":"mean", "Poverty":"mean"})
+    df_2["Poverty_Death_ratio"] = df_2["Population_Size"]/df_2["Poverty"]
+    df_2 = df_2.sort_values(by=["Poverty_Death_ratio"], ascending=False)
+    print(df_2.round(2))
 
 
 
@@ -55,7 +58,7 @@ def death_factors(df1, df2):
     pop_deaths = pd.merge(population, deaths, on="CHSI_State_Name")
     pop_deaths = pop_deaths.sort_values(by=["Total_Deaths"], ascending=False)
     first_20 = pop_deaths.head(10)
-    #print(first_20)
+    print(first_20)
 
     p1 = plt.bar(first_20["CHSI_State_Name"], first_20["White"], width=1, color="DarkGreen", edgecolor="black")
     p2 = plt.bar(first_20["CHSI_State_Name"], first_20["Black"], width=1, bottom=first_20["White"], color="Blue", edgecolor="black")
@@ -73,10 +76,11 @@ def death_factors(df1, df2):
     r4 = plt.bar(last_20["CHSI_State_Name"], last_20["Hispanic"], width=1,
                  bottom=np.array(last_20["White"]) + np.array(last_20["Black"]) + np.array(last_20["Others"]),
                  color="Orange", edgecolor="black")
-    #print(last_20)
+    print(last_20)
     plt.xticks(rotation="vertical")
-    #plt.show()
+    plt.show()
 birth_death_ratio(demographics, measures)
+population_poverty(demographics)
 death_factors(demographics, measures)
 # print(demographics.info())
 # print(demographics.isnull().sum())
