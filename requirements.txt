@@ -3,6 +3,5 @@ numpy
 scipy
 pandas
 matplotlib
-os
 pip
 csv
