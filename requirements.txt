@@ -2,7 +2,8 @@
 numpy
 scipy
 pandas
-matplotlib.pyplot
+matplotlib
 os
 pip
 csv
+pylab
