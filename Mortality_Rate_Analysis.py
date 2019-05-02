@@ -3,7 +3,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+def multiply(a, b):
+    """
+    >>> multiply(4, 3)
+    12
+    >>> multiply('a', 3)
+    'aaa'
+    """
+    return a * b
 
 def birth_death_ratio(df, df2):
     """
