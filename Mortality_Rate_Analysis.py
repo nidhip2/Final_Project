@@ -6,6 +6,12 @@ import matplotlib.pyplot as plt
 
 
 def birth_death_ratio(df, df2):
+    """
+
+    :param df:
+    :param df2:
+    :return:
+    """
     df1 = df[["CHSI_County_Name", "CHSI_State_Name", "White", "Black", "Native_American", "Asian", "Hispanic", "Poverty", "Population_Size"]]
     df_1 = df1[df1["Poverty"]>=0].copy()
     df_1['Others'] = df_1['Native_American']+df_1['Asian']
@@ -50,6 +56,11 @@ def birth_death_ratio(df, df2):
 
 
 def population_poverty(df):
+    """
+
+    :param df:
+    :return:
+    """
     df1 = df[["CHSI_State_Name", "Poverty", "Population_Size"]]
     df1 = df1[df1["Poverty"]>=0]
     df_2 = df1.groupby(["CHSI_State_Name"], as_index=False).agg({"Population_Size":"mean", "Poverty":"mean"})
@@ -59,6 +70,12 @@ def population_poverty(df):
 
 
 def death_factors(df1, df2):
+    """
+
+    :param df1:
+    :param df2:
+    :return:
+    """
     df = df1[["CHSI_State_Name", "White", "Black", "Native_American", "Asian", "Hispanic"]]
     df_2 = df2[["CHSI_State_Name","Total_Deaths"]]
     df_1 = df.copy()
@@ -102,6 +119,14 @@ def death_factors(df1, df2):
 
 
 def merge_dataframes(dataframe1, dataframe2, dataframe3, dataframe4):
+    """
+
+    :param dataframe1:
+    :param dataframe2:
+    :param dataframe3:
+    :param dataframe4:
+    :return:
+    """
     df_demo = dataframe2[["CHSI_County_Name","CHSI_State_Name","Poverty","Population_Size"]]
     df_riskfactor = dataframe1[["CHSI_County_Name","CHSI_State_Name","No_Exercise","Obesity","High_Blood_Pres","Smoker","Diabetes","Uninsured","Elderly_Medicare","Disabled_Medicare","Prim_Care_Phys_Rate"]]
     df_measurebd = dataframe3[["State_FIPS_Code","County_FIPS_Code","CHSI_County_Name","CHSI_State_Name","Late_Care","Infant_Mortality","Total_Deaths","Total_Births"]]
@@ -116,6 +141,11 @@ def merge_dataframes(dataframe1, dataframe2, dataframe3, dataframe4):
 
 
 def analysis_1 (df):
+    """
+
+    :param df:
+    :return:
+    """
 
     df_final_1 = df.replace([-1111, -1111.1, -1, -2222.2, -2222, -2], 0)
     df_final_1 = df_final_1.groupby(['CHSI_State_Name'], as_index = False)["No_Exercise", "Obesity", "Poverty", "High_Blood_Pres", "Smoker", "Diabetes", "Total_Deaths", "Total_Births"].mean()
@@ -131,6 +161,11 @@ def analysis_1 (df):
 
 
 def analysis_2 (df):
+    """
+
+    :param df:
+    :return:
+    """
 
     df_final_2 = df.replace([-1111, -1111.1, -1, -2222.2, -2222, -2], 0)
     df_final_2 = df_final_2.groupby(['CHSI_State_Name'], as_index = False)["Unemployed","Uninsured", "Elderly_Medicare", "Disabled_Medicare", "Prim_Care_Phys_Rate", "Late_Care", "Infant_Mortality","Total_Deaths","Poverty"].mean()
@@ -143,6 +178,12 @@ def analysis_2 (df):
 
 
 def genetic_deaths(df1,df2):
+    """
+
+    :param df1:
+    :param df2:
+    :return:
+    """
     df = pd.merge(df1,df2, on = ["CHSI_County_Name","County_FIPS_Code","CHSI_State_Name","State_FIPS_Code"])
     df_1 = df[['CHSI_State_Name', "A_Wh_BirthDef","A_Bl_BirthDef","A_Ot_BirthDef","A_Hi_BirthDef","Total_Births"]]
     df_1 = df_1.replace(to_replace=[-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], value=0)
@@ -153,6 +194,10 @@ def genetic_deaths(df1,df2):
 
 
 def read_dataframes():
+    """
+
+    :return:
+    """
     demographics = pd.read_csv("DEMOGRAPHICS.csv")
     lead_death_cause = pd.read_csv("LEADINGCAUSESOFDEATH.csv")
     birth_death_measure = pd.read_csv("MEASURESOFBIRTHANDDEATH.csv")
