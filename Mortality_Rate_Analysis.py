@@ -178,7 +178,7 @@ def analysis_2 (df):
 
 def genetic_deaths(df1,df2):
     
-     """
+    """
     This function helps us to understand and provide information regarding the mortality rate in all the counties or
     states in the United States of America based on birth defects.
     The factors taken into consideration are State name and Birth defects in different ethnic groups, for every county.
