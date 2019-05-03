@@ -204,7 +204,7 @@ def genetic_deaths(df1,df2):
     >>> df1 = pd.read_csv("Testfile_LCOD.csv")
     >>> df2 = pd.read_csv("Testfile_MOBAD.csv")
     >>> df3 = pd.merge(df1,df2, on= ["CHSI_County_Name","CHSI_State_Name"])
-    >>> df3 = df3.replace(to_replace=[-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], value=0)
+    >>> df3 = df3.replace([-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], np.nan)
     >>> df3 = df3.groupby("CHSI_State_Name")["A_Wh_BirthDef", "A_Bl_BirthDef", "A_Ot_BirthDef", "A_Hi_BirthDef", "Total_Births"].sum()
     >>> print(df3["Total_Births"])
     CHSI_State_Name
@@ -214,7 +214,7 @@ def genetic_deaths(df1,df2):
         
     df = pd.merge(df1,df2, on = ["CHSI_County_Name","County_FIPS_Code","CHSI_State_Name","State_FIPS_Code"])
     df_1 = df[['CHSI_State_Name', "A_Wh_BirthDef","A_Bl_BirthDef","A_Ot_BirthDef","A_Hi_BirthDef","Total_Births"]]
-    df_1 = df_1.replace(to_replace=[-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], value=0)
+    df_1 = df_1.replace([-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], np.nan)
     df_1 = df_1.groupby("CHSI_State_Name")["A_Wh_BirthDef", "A_Bl_BirthDef", "A_Ot_BirthDef", "A_Hi_BirthDef", "Total_Births"].sum()
     df_1.reset_index()
     pd.set_option('display.max_columns', None)
