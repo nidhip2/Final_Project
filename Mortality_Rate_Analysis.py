@@ -369,7 +369,31 @@ def death_other_factors(df1, df2, df3):
     return df_5
     # print(df_5.head(10))
 
+def age_poverty(df):
+    """
+    The state wise output shoews that the percent of population for Age_85_and_Over is slightly greater in top 10 states with Low Poerty index
+    as compared to that of states with high poverty index.
+    
+    :param df: We are passing the demographics dataframe for the analysis.
+    :return:
+    
+    """
+    df_1 = df[["CHSI_County_Name", "CHSI_State_Name", "Age_19_Under", "Age_19_64", "Age_65_84", "Age_85_and_Over", "Poverty"]]
+    df_1 = df_1.replace([-1111.1, -2222.2], np.nan)
+    df_2 = df_1.groupby(["CHSI_County_Name","CHSI_State_Name"], as_index=False)["Age_19_Under", "Age_19_64", "Age_65_84", "Age_85_and_Over", "Poverty"].mean()
+    df_3 = df_2.sort_values(by="Poverty", ascending=False)
+    df_3 = df_3.round(2)
+    print(df_3.head(10))
+    print(df_3.tail(10))
 
+    df_4 = df_1.groupby(["CHSI_State_Name"], as_index=False)["Age_19_Under", "Age_19_64", "Age_65_84", "Age_85_and_Over", "Poverty"].mean()
+    df_5 = df_4.sort_values(by="Poverty", ascending=False)
+    df_5 = df_5.round(2)
+    print(df_5.head(10))
+    print(df_5.tail(10))
+
+    
+ 
 def read_dataframes():
     
     """
