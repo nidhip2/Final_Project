@@ -2,16 +2,36 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def birth_death_ratio(df, df2):
     """
-     Here we have performed  race-wise analysis based on poverty and birth death ratio. This analysis is further bifurcated on county wise
-     data and state wise data.
-     
-    :param df: We are passing the demographics dataframe for the analysis.
-    :param df2: We are passing the birth_death_measure dataframe for the analysis.
-    :return:
+    In this function, we have performed analysis in terms of race or ethnicity of an individual. This analysis is
+    further done on basis of poverty and birth to death ratio in a particular county.
+    This analysis is further bifurcated on county wise and state wise. The function returns a dataframe that is used
+    to provide a detailed graphical representation.
+
+    :param df: We are passing the demographics data-frame for the analysis.
+    :param df2: We are passing the birth_death_measure data-frame for the analysis.
+    :return: returns two data-frames consisting of analysis based on the race or ethnicity and grouped by county and
+    state names.
+
+    >>> df = pd.read_csv("Testfile_DEMO.csv")
+    >>> df2 = pd.read_csv("Testfile_MOBAD.csv")
+    >>> df3 , df4 = birth_death_ratio(df,df2)
+    >>> print((df3[["CHSI_County_Name","Poverty","birth_death_ratio"]]).head(5))
+      CHSI_County_Name  Poverty  birth_death_ratio
+    0            Adams     11.2         102.618057
+    1        Alexander     22.2          94.186047
+    2             Bond     10.8          89.892802
+    3            Boone      7.7          48.572345
+    4            Brown     11.6         101.206897
+
+    >>> print(df4[["CHSI_State_Name","Poverty","Total_Deaths"]])
+      CHSI_State_Name  Poverty  Total_Deaths
+    0        Illinois    10.74       4001.82
+
     """
     df1 = df[["CHSI_County_Name", "CHSI_State_Name", "White", "Black", "Native_American", "Asian", "Hispanic", "Poverty", "Population_Size"]]
     df_1 = df1[df1["Poverty"]>=0].copy()
@@ -22,7 +42,7 @@ def birth_death_ratio(df, df2):
     birth_death["birth_death_ratio"] = birth_death['Total_Deaths']/birth_death['Total_Births']*100
     data = pd.merge(df_1, birth_death, on = ['CHSI_County_Name', 'CHSI_State_Name'])
     pd.set_option('display.max_columns', None)
-    print(data.sort_values(by = 'Poverty',ascending=False))
+    #print(data.sort_values(by = 'Poverty',ascending=False))
 
     dfa = df_1.groupby(["CHSI_State_Name"], as_index=False).agg(
         {"White": "mean", "Black": "mean", "Others": "mean", "Hispanic": "mean", "Poverty": "mean"})
@@ -30,24 +50,36 @@ def birth_death_ratio(df, df2):
     final_df = pd.merge(dfa, dfb, on="CHSI_State_Name")
     final_df = final_df.round(2)
     final_df = final_df.sort_values(by=["Poverty"], ascending=False)
-    print(final_df)
+    # print(final_df)
+    
+    return data, final_df
 
+def plot_birth_death_ratio(x,y):
+    """
+    This function is used to provide a graphical representation of the analysis done in the previous function, i.e.
+    birth_death_ratio().
+    :param x: the data-frame on used to complete the plot
+    :param y: data-frame used to create the bar graph plot
+    :return:
+    """
+
+    df_1, df_2 = birth_death_ratio(x,y)
     plt.subplot(2, 1, 1)
-    plt.scatter(x=data['Poverty'], y=data["White"], color="DarkGreen", label="White")
-    plt.scatter(x=data['Poverty'], y=data["Black"], color="DarkBlue", label="Black")
-    plt.scatter(x=data['Poverty'], y=data["Others"], color="Red", label="Others")
-    plt.scatter(x=data['Poverty'], y=data["Hispanic"], color="Orange", label="Hispanic")
+    plt.scatter(x=df_1['Poverty'], y=df_1["White"], color="DarkGreen", label="White")
+    plt.scatter(x=df_1['Poverty'], y=df_1["Black"], color="DarkBlue", label="Black")
+    plt.scatter(x=df_1['Poverty'], y=df_1["Others"], color="Red", label="Others")
+    plt.scatter(x=df_1['Poverty'], y=df_1["Hispanic"], color="Orange", label="Hispanic")
     plt.xlabel("Poverty")
     plt.ylabel("Race-wise Pop")
     plt.legend(loc="upper right", fontsize="x-small")
     plt.title("County & Race-wise Poverty")
-    plt.grid(linewidth=0.5, color = "grey")
+    plt.grid(linewidth=0.5, color="grey")
 
     plt.subplot(2, 1, 2)
-    plt.scatter(x=final_df['Poverty'], y=final_df["White"], color="DarkGreen", label="White")
-    plt.scatter(x=final_df['Poverty'], y=final_df["Black"], color="DarkBlue", label="Black")
-    plt.scatter(x=final_df['Poverty'], y=final_df["Others"], color="Red", label="Others")
-    plt.scatter(x=final_df['Poverty'], y=final_df["Hispanic"], color="Orange", label="Hispanic")
+    plt.scatter(x=df_2['Poverty'], y=df_2["White"], color="DarkGreen", label="White")
+    plt.scatter(x=df_2['Poverty'], y=df_2["Black"], color="DarkBlue", label="Black")
+    plt.scatter(x=df_2['Poverty'], y=df_2["Others"], color="Red", label="Others")
+    plt.scatter(x=df_2['Poverty'], y=df_2["Hispanic"], color="Orange", label="Hispanic")
     plt.xlabel("Poverty")
     plt.ylabel("Race-wise Pop")
     plt.legend(loc="upper right", fontsize="x-small")
@@ -55,28 +87,50 @@ def birth_death_ratio(df, df2):
     plt.title("State & Race-wise Poverty")
     plt.show()
 
-
 def population_poverty(df):
     
     """
-     Here we have performed state wise analyis of poverty and population for the given dataset.
-    :param df: We are passing the demographics dataframe for the analysis 
-    :return:
+    In this function, we have performed analysis of poverty and population for the given dataset and the data is
+    further divided on state names. The end result of this function gives us distribution where we can relate how population is
+    affected by the poverty value of a particular county. This function gives us idea of the population to poverty
+    ratio.
+    :param df: We are passing the demographics data-frame for the analysis
+    :return: returns the fata-frame with the analysis.
+
+    >>> df1 = pd.read_csv("Testfile_DEMO.csv")
+    >>> df2 = population_poverty(df1)
+    >>> print(df2)
+      CHSI_State_Name  Population_Size    Poverty  Pop_Poverty_ratio
+    0        Illinois    125131.088235  10.744118       11646.474131
+
     """
     df1 = df[["CHSI_State_Name", "Poverty", "Population_Size"]]
     df1 = df1[df1["Poverty"]>=0]
     df_2 = df1.groupby(["CHSI_State_Name"], as_index=False).agg({"Population_Size":"mean", "Poverty":"mean"})
     df_2["Pop_Poverty_ratio"] = df_2["Population_Size"]/df_2["Poverty"]
     df_2 = df_2.sort_values(by=["Pop_Poverty_ratio"], ascending=True)
-    print(df_2.round(2))
+    # print(df_2.round(2))
+    return df_2
 
 
 def death_factors(df1, df2):
     """
-    Here we have performed analysis of race-wise death and sorted the data by highest death rate i.e Total Deaths
-    :param df1: We are passing the demographics dataframe for the analysis
-    :param df2: We are passing the birth_death_measure dataframe for the analysis
-    :return:
+    In this function, we have performed analysis to demonstrate how the deaths among the different races or
+    different ethnic groups in United States. The data is sorted on basis of highest death rate. The final data
+    is then used to create plots for demonstrating the same.
+    
+    :param df1: We are passing the demographics data-frame for the analysis
+    :param df2: We are passing the birth_death_measure data-frame for the analysis
+    :return: The function returns two data-frames, the actual analysis and other data-frame used to create plots to
+    demonstrate the analysis.
+    
+    >>> df1 = pd.read_csv("Testfile_DEMO.csv")
+    >>> df2 = pd.read_csv("Testfile_MOBAD.csv")
+    >>> df3 , df4, df5 = death_factors(df1, df2)
+    >>> print(df4[["CHSI_State_Name", "Total_Deaths"]])
+      CHSI_State_Name  Total_Deaths
+    0        Illinois        4002.0
+
     """
     df = df1[["CHSI_State_Name", "White", "Black", "Native_American", "Asian", "Hispanic"]]
     df_2 = df2[["CHSI_State_Name","Total_Deaths"]]
@@ -92,30 +146,46 @@ def death_factors(df1, df2):
     pop_deaths = pop_deaths.sort_values(by=["Total_Deaths"], ascending=False)
     first_20 = pop_deaths.head(10)
     last_20 = pop_deaths.tail(10)
-    print(first_20)
+    # print(first_20)
+    
+    return pop_deaths, first_10, last_10
 
-    p1 = plt.bar(first_20["CHSI_State_Name"], first_20["White"], width=1, color="DarkGreen", edgecolor="black", label="White")
-    p2 = plt.bar(first_20["CHSI_State_Name"], first_20["Black"], width=1, bottom=first_20["White"], color="Blue", edgecolor="black", label="Black")
-    p3 = plt.bar(first_20["CHSI_State_Name"], first_20["Others"], width=1, bottom=np.array(first_20["White"]) + np.array(first_20["Black"]),
+
+def plot_death_factors(x,y):
+    """
+    This function is used to plot and demonstrate the analysis done in the previous function, i.e. death_factors.
+    :param x: the first data-frame used, i.e. we are passing the demographics data-frame for the analysis
+    :param y: the second data-frame used, i.e. we are passing the birth_death_measure data-frame for the analysis
+    :return: the function plots the resultant data-frame of the death_factors function.
+    """
+
+    pop_deaths, first_10, last_10 = death_factors(x,y)
+    p1 = plt.bar(first_10["CHSI_State_Name"], first_10["White"], width=1, color="DarkGreen", edgecolor="black",
+                 label="White")
+    p2 = plt.bar(first_10["CHSI_State_Name"], first_10["Black"], width=1, bottom=first_10["White"], color="Blue",
+                 edgecolor="black", label="Black")
+    p3 = plt.bar(first_10["CHSI_State_Name"], first_10["Others"], width=1,
+                 bottom=np.array(first_10["White"]) + np.array(first_10["Black"]),
                  color="Red", edgecolor="black", label="Others")
-    p4 = plt.bar(first_20["CHSI_State_Name"], first_20["Hispanic"], width=1,
-                 bottom=np.array(first_20["White"]) + np.array(first_20["Black"]) + np.array(first_20["Others"]),
+    p4 = plt.bar(first_10["CHSI_State_Name"], first_10["Hispanic"], width=1,
+                 bottom=np.array(first_10["White"]) + np.array(first_10["Black"]) + np.array(first_10["Others"]),
                  color="Orange", edgecolor="black", label="Hispanic")
 
-    r1 = plt.bar(last_20["CHSI_State_Name"], last_20["White"], width=1, color="DarkGreen", edgecolor="black")
-    r2 = plt.bar(last_20["CHSI_State_Name"], last_20["Black"], width=1, bottom=last_20["White"], color="Blue", edgecolor="black")
-    r3 = plt.bar(last_20["CHSI_State_Name"], last_20["Others"], width=1,
-                 bottom=np.array(last_20["White"]) + np.array(last_20["Black"]),
+    r1 = plt.bar(last_10["CHSI_State_Name"], last_10["White"], width=1, color="DarkGreen", edgecolor="black")
+    r2 = plt.bar(last_10["CHSI_State_Name"], last_10["Black"], width=1, bottom=last_10["White"], color="Blue",
+                 edgecolor="black")
+    r3 = plt.bar(last_10["CHSI_State_Name"], last_10["Others"], width=1,
+                 bottom=np.array(last_10["White"]) + np.array(last_10["Black"]),
                  color="Red", edgecolor="black")
-    r4 = plt.bar(last_20["CHSI_State_Name"], last_20["Hispanic"], width=1,
-                 bottom=np.array(last_20["White"]) + np.array(last_20["Black"]) + np.array(last_20["Others"]),
+    r4 = plt.bar(last_10["CHSI_State_Name"], last_10["Hispanic"], width=1,
+                 bottom=np.array(last_10["White"]) + np.array(last_10["Black"]) + np.array(last_10["Others"]),
                  color="Orange", edgecolor="black")
 
     plt.xlabel("Top & Last 10 States")
     plt.ylabel("Race-wise Pop percent")
     plt.legend(loc="upper right", fontsize="x-small")
     plt.xticks(rotation="vertical")
-    plt.grid(linewidth=0.5, color = "grey")
+    plt.grid(linewidth=0.5, color="grey")
     plt.title("Top 10 & last 10 states ")
     plt.show()
 
@@ -145,9 +215,12 @@ def merge_dataframes(dataframe1, dataframe2, dataframe3, dataframe4):
 
 def analysis_1 (df):
     """
-    
+    Here we are considering various factors like "No_Exercise","Obesity", "Few_Fruit_Veg", "Smoker", "Diabetes", "High_Blood_Pres" for the analysis of total death 
+    in a particular state. We have then related these factors to the povert i that state and found the co relation between the death and the poverty in that region.
+    In addition to the above factors we have also used factors like "Poverty", "Uninsured", "Elderly_Medicare", "Disabled_Medicare", "Late_Care", "Prim_Care_Phys_Rate"
+    to find the relation between these povert and the total death in that particular state.
     :param df: We are passing the result dataframe for the analysis which is obtained from merge_dataframes function.
-    :return:
+    :return: We are returning the final dataframe df_demo_risk_bd_unemp for further analysis
     """
 
     df_final_1 = df.replace([-1111, -1111.1, -1, -2222.2, -2222, -2], np.nan)
@@ -162,17 +235,54 @@ def analysis_1 (df):
     df_2 = df_2.sort_values(by=["Poverty", "Total_Deaths"], ascending=False)
     df_2 = df_2.round(2)
     pd.set_option('display.max_columns', None)
-    print(df_2.head(10))
+    # print(df_2.head(10))
+    
+    return df_1,df2
+
+
+def plot_analysis_1(df):
+    """
+    In this function, we are trying to plot between the Poverty on basis of various factors and population size of a
+    particular county.
+    :param df: thee dataframe used to create the plot
+    :return: returns the plot for the analysis
+    """
+    df_1, df_2 = analysis_1(df)
+    df_2 = df.dropna()
+    sns.heatmap(df_2.corr(), xticklabels=df_2.corr().columns, yticklabels=df_2.corr().columns, cmap='RdYlGn', center=0,
+                annot=True)
+    plt.title('Correlogram of Poverty', fontsize=12)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.show()
+    # print(df_2.head(10))
 
 
 def other_risk_factors(df1, df2):
     
     """
-    Here we are analysing other risk factors like "Premature", "Under_18", "Over_40", "Late_Care" and sort the values based on Povert and Birth Death ratio.
-    It shows that counties with high povert rate generally have high "Premature", "Under_18", "Over_40", "Late_Care" ratio.
-    :param df1: We are passing the demographics dataframe for the analysis
-    :param df2: We are passing the birth_death_measure dataframe for the analysis
-    :return:
+    in this function, we are analysing other risk factors like "Premature", "Under_18", "Over_40", "Late_Care"
+    and sort the values based on Poverty and Birth Death ratio.
+    It shows that counties with high poverty rate generally have high "Premature", "Under_18", "Over_40", "Late_Care" ratio.
+    :param df1: We are passing the demographics data-frame for the analysis
+    :param df2: We are passing the birth_death_measure data-frame for the analysis
+    :return: The functions returns the analysed data in the form of a data-frame, which is used to create plots to
+    demonstrate the analysis.
+    >>> df1 = pd.read_csv("Testfile_MOBAD.csv")
+    >>> df2 = pd.read_csv("Testfile_DEMO.csv")
+    >>> df3 = other_risk_factors(df1,df2)
+    >>> print((df3[["CHSI_County_Name", "Poverty"]].head(10)))
+       CHSI_County_Name  Poverty
+    1         Alexander     22.2
+    76          Pulaski     19.8
+    38          Jackson     19.3
+    54        McDonough     15.9
+    29         Gallatin     15.8
+    82           Saline     15.0
+    34           Hardin     14.8
+    27         Franklin     14.8
+    81        St. Clair     14.5
+    15             Cook     14.5
     """
     
     df_1 = df1[["CHSI_County_Name", "CHSI_State_Name", "LBW", "VLBW", "Premature", "Under_18", "Over_40", "Late_Care", "Total_Births", "Total_Deaths"]]
@@ -184,10 +294,49 @@ def other_risk_factors(df1, df2):
     df_2 = df_2.replace([-1111.1, -2222.2], np.nan)
     df_3 = pd.merge(df_1, df_2, on=["CHSI_County_Name", "CHSI_State_Name"])
     df_3 = df_3.sort_values(by=["Poverty", "Birth_Death_Ratio"], ascending=[False, False])
-    print(df_3.head(20))
-    print(df_3.tail(20))
+    return df_3
 
+def plot_other_risk_factors(a, b):
+    """
+    In this function, we are trying to plot the factors responsible for mortality rates on basis of county.
+    :param a: data frame used to create the plot
+    :param b: date frame used to create the plot
+    :return: the function returns the plot of the previous function.
+    """
+    df = other_risk_factors(a, b)
+    df_4 = df.groupby(["CHSI_State_Name"], as_index=False)[
+        "Premature", "Under_18", "Over_40", "Late_Care", "LBW_VLBW", "Birth_Death_Ratio", "Poverty"].mean()
+    df_4 = df_4.sort_values(by=["Poverty", "Birth_Death_Ratio"], ascending=[False, False])
+    df_4 = df_4.round(2)
+    # print(df_4.head(10))
+    # print(df_4.tail(10))
 
+    df_5 = df_4.head(10)
+    df_6 = df_4.tail(10)
+    # print(df_5)
+    # print(df_6)
+    df_7 = pd.concat([df_5, df_6])
+    print(df_7)
+    plt.subplot(2, 2, 1)
+    plt.bar(df_7["CHSI_State_Name"], df_7["Poverty"])
+    plt.ylabel("State-wise Poverty Distribution")
+    plt.xticks([])
+
+    plt.subplot(2, 2, 3)
+    plt.bar(df_7["CHSI_State_Name"], df_7["Under_18"])
+    plt.ylabel("Under_18_births")
+    plt.xticks(df_7["CHSI_State_Name"], rotation="vertical")
+
+    plt.subplot(2, 2, 2)
+    plt.bar(df_7["CHSI_State_Name"], df_7["Premature"])
+    plt.ylabel("Premature_births")
+    plt.xticks([])
+
+    plt.subplot(2, 2, 4)
+    under_18 = plt.bar(df_7["CHSI_State_Name"], df_7["Late_Care"])
+    plt.ylabel("Late_Care_births")
+    plt.xticks(df_7["CHSI_State_Name"], rotation="vertical")
+    plt.show()
 
 def genetic_deaths(df1,df2):
     
@@ -247,21 +396,6 @@ def air_quality_death(df1, df2, df3):
     3          Cook      140
     4        DuPage      110
     5     Effingham      105
-    6      Hamilton      119
-    7       Jackson       46
-    8        Jersey      108
-    9          Kane      122
-    11     La Salle       93
-    12      McHenry      115
-    13       McLean      112
-    14        Macon       99
-    15     Macoupin      119
-    17       Peoria      105
-    18     Randolph       97
-    19  Rock Island       77
-    20     Sangamon      119
-    23         Will      115
-    24    Winnebago      117
 
     """
     df_3 = df3[["CHSI_County_Name", "CHSI_State_Name", "Population_Size"]]
@@ -280,7 +414,6 @@ def air_quality_death(df1, df2, df3):
 
 
 def disease_pollution(df1, df2, df3, df4):
-    
     
     """
     We have performed the analysis on various diseases like lung cancer, breast cancer, Col_cancer_d. We check the occurances of these diseases
@@ -375,7 +508,7 @@ def age_poverty(df):
     as compared to that of states with high poverty index.
     
     :param df: We are passing the demographics dataframe for the analysis.
-    :return:
+    :return: We are returning the final dataframe 'data_5' obtained after the analysis
     
     """
     df_1 = df[["CHSI_County_Name", "CHSI_State_Name", "Age_19_Under", "Age_19_64", "Age_65_84", "Age_85_and_Over", "Poverty"]]
@@ -389,8 +522,9 @@ def age_poverty(df):
     df_4 = df_1.groupby(["CHSI_State_Name"], as_index=False)["Age_19_Under", "Age_19_64", "Age_65_84", "Age_85_and_Over", "Poverty"].mean()
     df_5 = df_4.sort_values(by="Poverty", ascending=False)
     df_5 = df_5.round(2)
-    print(df_5.head(10))
-    print(df_5.tail(10))
+    return df_5
+    #print(df_5.head(10))
+    #print(df_5.tail(10))
 
     
  
