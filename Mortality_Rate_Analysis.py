@@ -6,9 +6,11 @@ import matplotlib.pyplot as plt
 
 def birth_death_ratio(df, df2):
     """
-
-    :param df:
-    :param df2:
+     Here we have performed  race-wise analysis based on poverty and birth death ratio. This analysis is further bifurcated on county wise
+     data and state wise data.
+     
+    :param df: We are passing the demographics dataframe for the analysis.
+    :param df2: We are passing the birth_death_measure dataframe for the analysis.
     :return:
     """
     df1 = df[["CHSI_County_Name", "CHSI_State_Name", "White", "Black", "Native_American", "Asian", "Hispanic", "Poverty", "Population_Size"]]
@@ -55,9 +57,10 @@ def birth_death_ratio(df, df2):
 
 
 def population_poverty(df):
+    
     """
-
-    :param df:
+     Here we have performed state wise analyis of poverty and population for the given dataset.
+    :param df: We are passing the demographics dataframe for the analysis 
     :return:
     """
     df1 = df[["CHSI_State_Name", "Poverty", "Population_Size"]]
@@ -70,9 +73,9 @@ def population_poverty(df):
 
 def death_factors(df1, df2):
     """
-
-    :param df1:
-    :param df2:
+    Here we have performed analysis of race-wise death and sorted the data by highest death rate i.e Total Deaths
+    :param df1: We are passing the demographics dataframe for the analysis
+    :param df2: We are passing the birth_death_measure dataframe for the analysis
     :return:
     """
     df = df1[["CHSI_State_Name", "White", "Black", "Native_American", "Asian", "Hispanic"]]
@@ -119,12 +122,13 @@ def death_factors(df1, df2):
 
 def merge_dataframes(dataframe1, dataframe2, dataframe3, dataframe4):
     """
-
-    :param dataframe1:
-    :param dataframe2:
-    :param dataframe3:
-    :param dataframe4:
-    :return:
+    Here we are combining the required data obtained by various dataframes and merged them into different dataframes according to
+    the required conditions.
+    :param dataframe1: We are passing the risk_factors dataframe for the analysis
+    :param dataframe2: We are passing the demographics dataframe for the analysis
+    :param dataframe3: We are passing the birth_death_measure dataframe for the analysis
+    :param dataframe4: We are passing the vulnerable_pops dataframe for the analysis
+    :return: df_demo_risk_bd_unemp as the final dataframe to be used in the future analysis
     """
     df_demo = dataframe2[["CHSI_County_Name","CHSI_State_Name","Poverty","Population_Size"]]
     df_riskfactor = dataframe1[["CHSI_County_Name","CHSI_State_Name","No_Exercise","Obesity","High_Blood_Pres","Smoker","Diabetes","Uninsured","Elderly_Medicare","Disabled_Medicare","Prim_Care_Phys_Rate"]]
@@ -141,39 +145,48 @@ def merge_dataframes(dataframe1, dataframe2, dataframe3, dataframe4):
 
 def analysis_1 (df):
     """
-
-    :param df:
+    
+    :param df: We are passing the result dataframe for the analysis which is obtained from merge_dataframes function.
     :return:
     """
 
-    df_final_1 = df.replace([-1111, -1111.1, -1, -2222.2, -2222, -2], 0)
-    df_final_1 = df_final_1.groupby(['CHSI_State_Name'], as_index = False)["No_Exercise", "Obesity", "Poverty", "High_Blood_Pres", "Smoker", "Diabetes", "Total_Deaths", "Total_Births"].mean()
-    df = df_final_1.loc[(df_final_1 != 0).any(axis=1)]
-    print(df.isnull().sum())
+    df_final_1 = df.replace([-1111, -1111.1, -1, -2222.2, -2222, -2], np.nan)
+    df_1 = df_final_1[["CHSI_County_Name", "CHSI_State_Name", "Population_Size" , "Poverty", "Total_Deaths", "No_Exercise","Obesity", "Few_Fruit_Veg", "Smoker", "Diabetes", "High_Blood_Pres"]]
+    df_1 = df_1.groupby(["CHSI_State_Name"], as_index=False)["Poverty", "Total_Deaths", "Population_Size", "No_Exercise", "Obesity", "Few_Fruit_Veg", "Smoker",  "Diabetes", "High_Blood_Pres"].mean()
+    df_1 = df_1.sort_values(by=["Poverty", "Total_Deaths"], ascending=False)
+    df_1 = df_1.round(2)
+    #print(df_1.head(10))
 
+    df_2 = df_final_1[["CHSI_County_Name", "CHSI_State_Name", "Population_Size" , "Poverty", "Uninsured", "Elderly_Medicare", "Disabled_Medicare", "Late_Care", "Prim_Care_Phys_Rate", "Total_Deaths"]]
+    df_2 = df_2.groupby(["CHSI_State_Name"], as_index=False)["Population_Size" , "Poverty", "Uninsured", "Elderly_Medicare", "Disabled_Medicare", "Late_Care","Prim_Care_Phys_Rate", "Total_Deaths"].mean()
+    df_2 = df_2.sort_values(by=["Poverty", "Total_Deaths"], ascending=False)
+    df_2 = df_2.round(2)
     pd.set_option('display.max_columns', None)
-
-    b = (df.sort_values(by=["Poverty","Total_Deaths"], ascending=False).head(20))
-    b = b.round(2)
-    print (b.head())
-    print(b.tail())
+    print(df_2.head(10))
 
 
-def analysis_2 (df):
+def other_risk_factors(df1, df2):
+    
     """
-
-    :param df:
+    Here we are analysing other risk factors like "Premature", "Under_18", "Over_40", "Late_Care" and sort the values based on Povert and Birth Death ratio.
+    It shows that counties with high povert rate generally have high "Premature", "Under_18", "Over_40", "Late_Care" ratio.
+    :param df1: We are passing the demographics dataframe for the analysis
+    :param df2: We are passing the birth_death_measure dataframe for the analysis
     :return:
     """
+    
+    df_1 = df1[["CHSI_County_Name", "CHSI_State_Name", "LBW", "VLBW", "Premature", "Under_18", "Over_40", "Late_Care", "Total_Births", "Total_Deaths"]]
+    df_1 = df_1.replace([-1111.1, -2222.2], np.nan)
+    df_1["Birth_Death_Ratio"] = df_1["Total_Deaths"]/df_1["Total_Births"]*100
+    df_1["LBW_VLBW"] = df_1["LBW"] + df_1["VLBW"]
+    df_1 = df_1.drop(["Total_Deaths", "Total_Births", "LBW", "VLBW"], axis=1)
+    df_2 = df2[["CHSI_County_Name", "CHSI_State_Name", "Poverty", "Population_Size"]]
+    df_2 = df_2.replace([-1111.1, -2222.2], np.nan)
+    df_3 = pd.merge(df_1, df_2, on=["CHSI_County_Name", "CHSI_State_Name"])
+    df_3 = df_3.sort_values(by=["Poverty", "Birth_Death_Ratio"], ascending=[False, False])
+    print(df_3.head(20))
+    print(df_3.tail(20))
 
-    df_final_2 = df.replace([-1111, -1111.1, -1, -2222.2, -2222, -2], 0)
-    df_final_2 = df_final_2.groupby(['CHSI_State_Name'], as_index = False)["Unemployed","Uninsured", "Elderly_Medicare", "Disabled_Medicare", "Prim_Care_Phys_Rate", "Late_Care", "Infant_Mortality","Total_Deaths","Poverty"].mean()
-    df_final_2 = df_final_2.loc[(df_final_2 != 0).any(axis=1)]
-
-    pd.set_option('display.max_columns', None)
-
-    c = (df_final_2.sort_values(by=["Poverty", "Total_Deaths"], ascending=False).head(20))
-    print(c.head())
 
 
 def genetic_deaths(df1,df2):
@@ -184,9 +197,8 @@ def genetic_deaths(df1,df2):
     The factors taken into consideration are State name and Birth defects in different ethnic groups, for every county.
     This data is then calculated for each state by taking the total of all county data, for a particular state.
 
-
-    :param df1:
-    :param df2:
+    :param df1:  We are passing the lead_death_cause dataframe for the analysis.
+    :param df2:  We are passing the birth_death_measure dataframe for the analysis.
     :return:
 
     >>> df1 = pd.read_csv("Testfile_LCOD.csv")
@@ -207,9 +219,164 @@ def genetic_deaths(df1,df2):
     df_1.reset_index()
     pd.set_option('display.max_columns', None)
     print(df_1)
+    
+    
+def air_quality_death(df1, df2, df3):
+    
+    """
+    Here we are analysing the various factors which affect the air quality for all the states. These factors are then sorted,
+    and then we comapre the death ratio in that particular state with respect to the values of these factors.
+    
+    :param df1: We are passing the birth_death_measure dataframe for the analysis.
+    :param df2: We are passing the air_quality dataframe for the analysis.
+    :param df3: We are passing the demographics dataframe for the analysis.
+    :return: We are returning the final dataframe 'data_1' obtained after the analysis
+    >>> df1 = pd.read_csv("Testfile_MOBAD.csv")
+    >>> df2 = pd.read_csv("Testfile_AAQI.csv")
+    >>> df3 = pd.read_csv("Testfile_DEMO.csv")
+    >>> df4 = air_quality_death(df1,df2,df3)
+    >>> print(df4[["County", "Max AQI"]])
+             County  Max AQI
+    21     Tazewell      200
+    16      Madison      151
+    10         Lake      156
+    22       Wabash      160
+    0         Adams      122
+    1     Champaign       87
+    2         Clark       90
+    3          Cook      140
+    4        DuPage      110
+    5     Effingham      105
+    6      Hamilton      119
+    7       Jackson       46
+    8        Jersey      108
+    9          Kane      122
+    11     La Salle       93
+    12      McHenry      115
+    13       McLean      112
+    14        Macon       99
+    15     Macoupin      119
+    17       Peoria      105
+    18     Randolph       97
+    19  Rock Island       77
+    20     Sangamon      119
+    23         Will      115
+    24    Winnebago      117
+
+    """
+    df_3 = df3[["CHSI_County_Name", "CHSI_State_Name", "Population_Size"]]
+    df_1 = df1[["CHSI_County_Name", "CHSI_State_Name", "Total_Deaths"]]
+    df4 = pd.merge(df_1, df_3, on=["CHSI_County_Name", "CHSI_State_Name"])
+    df4["Pop_death_ratio"] = df4["Total_Deaths"]/df4["Population_Size"]*100
+    df4 = df4.drop(["Population_Size", "Total_Deaths"], axis=1)
+    df4 = df4.round(2)
+    df4.columns = ["County", "State", "Pop_death_ratio"]
+    df4 = df4[df4["Pop_death_ratio"] > 0]
+    (df4.sort_values(by="Pop_death_ratio", ascending=True))
+    df_2 = df2[["County", "State", "Max AQI", "Unhealthy Days", "Very Unhealthy Days", "Hazardous Days"]]
+    data = pd.merge(df4, df_2, on = ["County", "State"])
+    data_1 = data.sort_values(by=["Hazardous Days", "Very Unhealthy Days", "Unhealthy Days"], ascending=[False, False, False])
+    return data_1
+
+
+def disease_pollution(df1, df2, df3, df4):
+    
+    
+    """
+    We have performed the analysis on various diseases like lung cancer, breast cancer, Col_cancer_d. We check the occurances of these diseases
+    based on the AQI and toxic chemicals in a particular state.
+    
+    :param df1: We are passing the birth_death_measure dataframe for the analysis.
+    :param df2: We are passing the air_quality dataframe for the analysis.
+    :param df3: We are passing the vulnerable_pops dataframe for the analysis.
+    :param df4: We are passing the demographics dataframe for the analysis.
+    :return: We are returning the final dataframe 'data_7' obtained after the analysis
+    >>> df1 = pd.read_csv("Testfile_MOBAD.csv")
+    >>> df2 = pd.read_csv("Testfile_AAQI.csv")
+    >>> df3 = pd.read_csv("Testfile_VPAEH.csv")
+    >>> df4 = pd.read_csv("Testfile_DEMO.csv")
+    >>> df5 = disease_pollution(df1,df2,df3,df4)
+    >>> print((df5[["County","Toxic_Chem"]].head(5)))
+         County  Toxic_Chem
+    14   Peoria    31953727
+    3      Cook    12221689
+    13  Madison    11328080
+    12    Macon     7163343
+    19     Will     5328100
+
+    """
+    df_1 = df1[["CHSI_County_Name", "CHSI_State_Name","Lung_Cancer", "Brst_Cancer", "Col_Cancer"]]
+    df_1 = df_1[(df_1["Lung_Cancer"] > 0) & (df_1["Brst_Cancer"] > 0) & (df_1["Col_Cancer"] > 0)]
+    # print(df_1.sort_values(by="Brst_Cancer", ascending=True))
+    df_2 = df2[["County", "State", "Max AQI"]]
+    df_3 = df3[["CHSI_County_Name", "CHSI_State_Name", "Toxic_Chem"]]
+    df_3 = df_3[df_3["Toxic_Chem"] > 0]
+    df_4 = df4[["CHSI_County_Name", "CHSI_State_Name", "Population_Size"]]
+    df_5 = pd.merge(df_1, df_4, on=["CHSI_County_Name", "CHSI_State_Name"])
+    df_5["Lung_Cancer_d"] = (df_5["Lung_Cancer"]*df_5["Population_Size"])/100000
+    df_5["Brst_cancer_d"] = (df_5["Brst_Cancer"] * df_5["Population_Size"]) / 100000
+    df_5["Col_cancer_d"] = (df_5["Col_Cancer"] * df_5["Population_Size"]) / 100000
+    df_5 = df_5.drop(["Lung_Cancer", "Brst_Cancer", "Col_Cancer"], axis=1)
+    df_5 = df_5.round()
+    df_5["Total_cancer_deaths"] = df_5["Lung_Cancer_d"] + df_5["Brst_cancer_d"] + df_5["Col_cancer_d"]
+    # print(df_5.head(10))
+    df_6 = pd.merge(df_5, df_3, on=["CHSI_County_Name", "CHSI_State_Name"])
+    df_6.columns = ["County", "State", "Population_Size", "Lung_Cancer_d", "Brst_cancer_d", "Col_cancer_d", "Total_cancer_deaths", "Toxic_Chem"]
+    df_7 = pd.merge(df_6, df_2, on=["County", "State"])
+    df_7 = df_7.sort_values(by=["Toxic_Chem", "Max AQI"], ascending=[False, False]) 
+    # print(df_7.head(10))
+    # print(df_7.tail(10))
+    return df_7
+   
+
+
+def death_other_factors(df1, df2, df3):
+    """
+    We have performed the analysis on various factors like Major_Depression, Unemployment, Recent_Drug_Use,Suicide,Homicide based on the poverty for
+    a particular region.Further we have comapred the number of deaths depending on these factors.
+    
+    :param df1: We are passing the vulnerable_pops dataframe for the analysis.
+    :param df2: We are passing the birth_death_measure dataframe for the analysis.
+    :param df3: We are passing the demographics dataframe for the analysis.
+    :return: We are returning the final dataframe 'data_5' obtained after the analysis
+    >>> df1 = pd.read_csv("Testfile_VPAEH.csv")
+    >>> df2 = pd.read_csv("Testfile_MOBAD.csv")
+    >>> df3 = pd.read_csv("Testfile_DEMO.csv")
+    >>> df4 = death_other_factors(df1,df2,df3)
+    >>> print(df4[["CHSI_County_Name","Deaths_Suicide"]].head(5))
+       CHSI_County_Name  Deaths_Suicide
+    2              Cook           398.0
+    4            DuPage            68.0
+    8              Lake            53.0
+    20             Will            59.0
+    16        St. Clair            24.0
+
+    """
+    df_1 = df1[["CHSI_County_Name", "CHSI_State_Name", "Major_Depression", "Unemployed", "Recent_Drug_Use"]]
+    df_1 = df_1[df_1["Unemployed"] > 0]
+    df_2 = df2[["CHSI_County_Name", "CHSI_State_Name", "Suicide", "Homicide"]]
+    df_2 = df_2[(df_2["Suicide"] > 0) & (df_2["Homicide"] > 0)]
+    df_3 = df3[["CHSI_County_Name", "CHSI_State_Name", "Population_Size", "Poverty"]]
+    df_3 = df_3[df_3["Poverty"] > 0]
+    df_4 = pd.merge(df_2, df_3, on= ["CHSI_County_Name", "CHSI_State_Name"])
+    df_4["Deaths_Suicide"] = (df_4["Suicide"] * df_4["Population_Size"])/100000
+    df_4["Deaths_Homicide"] = (df_4["Homicide"] * df_4["Population_Size"]) / 100000
+    df_4["Poverty_Pop"] = (df_4["Poverty"] * df_4["Population_Size"])/100
+    df_4 = df_4.drop(["Homicide", "Suicide", "Poverty"], axis=1)
+    df_4 = df_4.round()
+    df_5 = pd.merge(df_1, df_4, on =["CHSI_County_Name", "CHSI_State_Name"])
+    df_5 = df_5.sort_values(["Poverty_Pop"], ascending=False)
+    return df_5
+    # print(df_5.head(10))
 
 
 def read_dataframes():
+    
+    """
+    Here we are are reading the required csv files from the dataset into dataframes.
+    
+    :return: We return the demographics, lead_death_cause, birth_death_measure, risk_factors, vulnerable_pops as dataframes after reading the csv files.
+    """
       
     demographics = pd.read_csv("DEMOGRAPHICS.csv")
     lead_death_cause = pd.read_csv("LEADINGCAUSESOFDEATH.csv")
