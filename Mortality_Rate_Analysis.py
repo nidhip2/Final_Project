@@ -3,14 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def multiply(a, b):
-    """
-    >>> multiply(4, 3)
-    12
-    >>> multiply('a', 3)
-    'aaa'
-    """
-    return a * b
 
 def birth_death_ratio(df, df2):
     """
@@ -185,12 +177,7 @@ def analysis_2 (df):
 
 
 def genetic_deaths(df1,df2):
-    """
 
-    :param df1:
-    :param df2:
-    :return:
-    """
     df = pd.merge(df1,df2, on = ["CHSI_County_Name","County_FIPS_Code","CHSI_State_Name","State_FIPS_Code"])
     df_1 = df[['CHSI_State_Name', "A_Wh_BirthDef","A_Bl_BirthDef","A_Ot_BirthDef","A_Hi_BirthDef","Total_Births"]]
     df_1 = df_1.replace(to_replace=[-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], value=0)
@@ -202,9 +189,27 @@ def genetic_deaths(df1,df2):
 
 def read_dataframes():
     """
+    This function helps us to understand and provide information regarding the mortality rate in all the counties or
+    states in the United States of America based on birth defects.
+    The factors taken into consideration are State name and Birth defects in different ethnic groups, for every county.
+    This data is then calculated for each state by taking the total of all county data, for a particular state.
 
+
+    :param df1:
+    :param df2:
     :return:
+
+    >>> df1 = pd.read_csv("D:/Projects/PR/Project/Testfile_LCOD.csv")
+    >>> df2 = pd.read_csv("D:/Projects/PR/Project/Testfile_MOBAD.csv")
+    >>> df3 = pd.merge(df1,df2, on= ["CHSI_County_Name","CHSI_State_Name"])
+    >>> df3 = df3.replace(to_replace=[-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], value=0)
+    >>> df3 = df3.groupby("CHSI_State_Name")["A_Wh_BirthDef", "A_Bl_BirthDef", "A_Ot_BirthDef", "A_Hi_BirthDef", "Total_Births"].sum()
+    >>> print(df3["Total_Births"])
+    CHSI_State_Name
+    Illinois    639809
+    Name: Total_Births, dtype: int64
     """
+    
     demographics = pd.read_csv("DEMOGRAPHICS.csv")
     lead_death_cause = pd.read_csv("LEADINGCAUSESOFDEATH.csv")
     birth_death_measure = pd.read_csv("MEASURESOFBIRTHANDDEATH.csv")
