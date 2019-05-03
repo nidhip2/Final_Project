@@ -1,0 +1,27 @@
+State	County	Year	Days with AQI	Good Days	Moderate Days	Unhealthy for Sensitive Groups Days	Unhealthy Days	Very Unhealthy Days	Hazardous Days	Max AQI	90th Percentile AQI	Median AQI	Days CO	Days NO2	Days Ozone	Days SO2	Days PM2.5	Days PM10
+Illinois	Adams	2010	353	310	42	1	0	0	0	122	54	37	0	0	322	0	31	0
+Illinois	Champaign	2010	183	145	38	0	0	0	0	87	58	34	0	0	73	0	110	0
+Illinois	Clark	2010	210	176	34	0	0	0	0	90	64	40	0	0	210	0	0	0
+Illinois	Cook	2010	365	96	238	31	0	0	0	140	94	60	0	42	91	36	195	1
+Illinois	DuPage	2010	365	212	150	3	0	0	0	110	72	46	0	0	96	0	269	0
+Illinois	Effingham	2010	195	157	32	6	0	0	0	105	74	44	0	0	195	0	0	0
+Illinois	Hamilton	2010	249	159	79	11	0	0	0	119	87	46	0	0	217	0	32	0
+Illinois	Jackson	2010	44	44	0	0	0	0	0	46	30	20	0	0	0	0	0	44
+Illinois	Jersey	2010	262	207	51	4	0	0	0	108	67	38	0	0	224	0	38	0
+Illinois	Kane	2010	365	316	46	3	0	0	0	122	59	36	0	0	334	0	31	0
+Illinois	La Salle	2010	365	284	81	0	0	0	0	93	58	35	0	0	0	0	254	111
+Illinois	Lake	2010	365	299	55	10	1	0	0	156	71	37	0	0	347	0	18	0
+Illinois	Macon	2010	365	209	156	0	0	0	0	99	71	47	0	0	186	16	163	0
+Illinois	Macoupin	2010	360	321	35	4	0	0	0	119	51	37	0	0	358	0	0	2
+Illinois	Madison	2010	365	89	249	25	2	0	0	151	91	61	0	0	83	25	256	1
+Illinois	McHenry	2010	362	269	92	1	0	0	0	115	64	41	0	0	224	0	138	0
+Illinois	McLean	2010	365	293	70	2	0	0	0	112	63	40	0	0	312	0	53	0
+Illinois	Peoria	2010	365	179	183	3	0	0	0	105	72	51	0	0	134	9	222	0
+Illinois	Randolph	2010	365	328	37	0	0	0	0	97	51	36	0	0	311	22	32	0
+Illinois	Rock Island	2010	363	341	22	0	0	0	0	77	45	32	0	0	337	0	26	0
+Illinois	Saint Clair	2010	365	200	158	7	0	0	0	150	76	45	0	58	151	3	153	0
+Illinois	Sangamon	2010	365	290	72	3	0	0	0	119	61	38	33	0	249	12	71	0
+Illinois	Tazewell	2010	363	292	34	31	6	0	0	200	105	6	0	0	0	363	0	0
+Illinois	Wabash	2010	365	335	28	1	1	0	0	160	44	11	0	0	0	365	0	0
+Illinois	Will	2010	365	318	45	2	0	0	0	115	58	37	0	0	312	20	32	1
+Illinois	Winnebago	2010	365	322	41	2	0	0	0	117	53	36	4	0	310	0	51	0
