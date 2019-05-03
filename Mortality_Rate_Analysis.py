@@ -177,18 +177,8 @@ def analysis_2 (df):
 
 
 def genetic_deaths(df1,df2):
-
-    df = pd.merge(df1,df2, on = ["CHSI_County_Name","County_FIPS_Code","CHSI_State_Name","State_FIPS_Code"])
-    df_1 = df[['CHSI_State_Name', "A_Wh_BirthDef","A_Bl_BirthDef","A_Ot_BirthDef","A_Hi_BirthDef","Total_Births"]]
-    df_1 = df_1.replace(to_replace=[-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], value=0)
-    df_1 = df_1.groupby("CHSI_State_Name")["A_Wh_BirthDef", "A_Bl_BirthDef", "A_Ot_BirthDef", "A_Hi_BirthDef", "Total_Births"].sum()
-    df_1.reset_index()
-    pd.set_option('display.max_columns', None)
-    print(df_1)
-
-
-def read_dataframes():
-    """
+    
+     """
     This function helps us to understand and provide information regarding the mortality rate in all the counties or
     states in the United States of America based on birth defects.
     The factors taken into consideration are State name and Birth defects in different ethnic groups, for every county.
@@ -209,7 +199,18 @@ def read_dataframes():
     Illinois    639809
     Name: Total_Births, dtype: int64
     """
-    
+
+    df = pd.merge(df1,df2, on = ["CHSI_County_Name","County_FIPS_Code","CHSI_State_Name","State_FIPS_Code"])
+    df_1 = df[['CHSI_State_Name', "A_Wh_BirthDef","A_Bl_BirthDef","A_Ot_BirthDef","A_Hi_BirthDef","Total_Births"]]
+    df_1 = df_1.replace(to_replace=[-9999, -2222, -2222.2, -2, -1111.1, -1111, -1], value=0)
+    df_1 = df_1.groupby("CHSI_State_Name")["A_Wh_BirthDef", "A_Bl_BirthDef", "A_Ot_BirthDef", "A_Hi_BirthDef", "Total_Births"].sum()
+    df_1.reset_index()
+    pd.set_option('display.max_columns', None)
+    print(df_1)
+
+
+def read_dataframes():
+      
     demographics = pd.read_csv("DEMOGRAPHICS.csv")
     lead_death_cause = pd.read_csv("LEADINGCAUSESOFDEATH.csv")
     birth_death_measure = pd.read_csv("MEASURESOFBIRTHANDDEATH.csv")
