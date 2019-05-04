@@ -192,7 +192,7 @@ def plot_death_factors(x, y):
 
 def merge_dataframes(dataframe1, dataframe2, dataframe3, dataframe4):
     """
-    in this function, we are combining the required data obtained by various data-frames and merged them into different data-frames, according to
+    In this function, we are combining the required data obtained by various data-frames and merged them into different data-frames, according to
     the required conditions.
     :param dataframe1: We are passing the risk_factors dataframe for the analysis
     :param dataframe2: We are passing the demographics dataframe for the analysis
@@ -219,7 +219,9 @@ def merge_dataframes(dataframe1, dataframe2, dataframe3, dataframe4):
 
 def analysis_1(df):
     """
-
+    In this function we are analysing the co relation between Poverty , Total_deaths and various risk factors like Poverty", "Total_Deaths", "No_Exercise", "Obesity",
+        "Few_Fruit_Veg", "Smoker", "Diabetes", "High_Blood_Pres" ,etc. These risk factors are either by choice or circumstantial.
+    Also , in addition to that we have analyzed the co-relation between  Poverty , Total_deaths and various factors related to medical care provided.
     :param df: We are passing the result dataframe for the analysis which is obtained from merge_dataframes function.
     :return:returns the data frame with the desired analysis
     """
@@ -663,6 +665,8 @@ if __name__ == '__main__':
     print(g)
     result = merge_dataframes(risk_factors, demographics, birth_death_measure, vulnerable_pops)
     h, i = analysis_1(result)
+    print("\n Co-relation between Poverty , Total_Death , various risk factors and medical assistance provided is done. The analysis is as follows: \n")
+    print("---------------------------------------------------------------------\n")
     print(h.head())
     print(i.head())
     print("\n The correlation between various risk factors, poverty")
