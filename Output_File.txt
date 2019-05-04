@@ -1,3 +1,4 @@
+C:\Users\npali\Anaconda3\python.exe "C:/Users/npali/Documents/IS_590_PR/Final Project/Mortality_Rate_Analysis.py"
 The relational analysis of Poverty with respect to different races in different counties: 
 
      CHSI_County_Name CHSI_State_Name  White  Black  Hispanic  Poverty  \
@@ -178,6 +179,11 @@ The mortality rate and Poverty analysis based on various risk factors like prema
 30            New Jersey        415139.29     8.54           48594.90
 21         Massachusetts        457053.07     9.13           50068.41
 6            Connecticut        438787.12     7.06           62129.15
+
+ Co-relation between Poverty , Total_Death , various risk factors and medical assistance provided is done. The analysis is as follows: 
+
+---------------------------------------------------------------------
+
          CHSI_State_Name  Poverty  No_Exercise  Obesity  Few_Fruit_Veg  \
 24           Mississippi    19.99        32.77    28.75          83.76   
 18             Louisiana    19.13        35.48    27.69          84.09   
