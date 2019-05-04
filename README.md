@@ -21,3 +21,9 @@ While considering the above factors and scenarios, we intend to perform descript
 2. Pollution and genetic defects have been the leading causes of cancer and major respiratory diseases. In addition to this drug abuse, smoking and unhealthy lifestyle choices have been major contributing factors in increasing mortality rate.
 
 3. The mortality rate in states with higher poverty index and higher risk factors are greater as compared to the ones with lower risk factors.
+
+## Results
+
+## Conclusion
+
+### Sources
