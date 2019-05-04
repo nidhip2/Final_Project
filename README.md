@@ -25,6 +25,7 @@ While considering the above factors and scenarios, we intend to perform descript
 ## Results
 
 For the first hypothesis, our analysis is as follows:
+
 • It is clear that the states with higher mortality rate have a higher black and Hispanic population whereas the states with lower death percentage have higher white and other race population.
 • It is clear from the graph that poverty ratio is generally random for all the races in all the counties.
 • However, as the population of white people is generally greater than other races population, poverty in white people is slightly
@@ -35,6 +36,7 @@ It can be clearly seen that the mortality rate among the different races or ethn
 
 
 For the second hypothesis, our analysis is as follows:
+
 • It can be observed that the mortality rates due to birth defects are higher and can be observed to be higher for White in every county.
 • In addition to this, we can see that the AQI i.e Air quality index is a major contributing factor in understanding the trend in cases of lung cancer among the people in different counties.
 • The higher AQI value corresponds to the total number of unhealthy days in that particular county.
@@ -44,6 +46,7 @@ For the second hypothesis, our analysis is as follows:
 In all, it can be concluded that the second hypothses holds true for all the factors stated above.
 
 For the third hypothesis, our analysis is as follows:
+
 • In some cases, the mortality rate is higher in places where the poverty index is higher and lower in the states where
 the poverty index is lower. However, after in-depth analysis of the result, we found out that this trend is notconsistent throughout the resultant data.
 • Also in addition to this we assumed that the mortality rate depends directly on various risk factors like
