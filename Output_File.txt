@@ -45,7 +45,7 @@ The relational analysis of Poverty with respect to different races in different 
  https://github.com/nidhip2/Final_Project--Analysis-on-mortality_rate/blob/master/plot_bdratio.png
 
 
- The total number of deaths in a particular county. The data is distributed and related on basis of raceof an individual 
+ The total number of deaths in a particular county. The data is distributed and related on basis of race of an individual 
 
 
 States with highest number of deaths (race-wise distribution) : 
