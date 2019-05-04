@@ -1,0 +1,398 @@
+The relational analysis of Poverty with respect to different races in different counties: 
+
+     CHSI_County_Name CHSI_State_Name  White  Black  Hispanic  Poverty  \
+2732            Starr           Texas   98.6    0.5      97.5     36.2   
+2413          Shannon    South Dakota    6.7    0.3       2.3     35.6   
+1126     East Carroll       Louisiana   31.1   68.2       1.3     33.9   
+2417             Todd    South Dakota   15.0    0.2       2.6     33.7   
+2423          Ziebach    South Dakota   25.5    0.0       1.1     33.0   
+
+      Population_Size  Others  Total_Births  Total_Deaths  birth_death_ratio  
+2732            60941     0.9        7325.0        1340.0          18.293515  
+2413            13657    91.9        3374.0        1149.0          34.054535  
+1126             8756     0.7        1587.0        1076.0          67.800882  
+2417             9882    83.4        2538.0         724.0          28.526399  
+2423             2631    74.3         409.0         145.0          35.452323  
+
+ Analysis based on how poverty in a state is biased on basis of race of an individual: 
+
+         CHSI_State_Name  White  Black  Others  Hispanic  Poverty  \
+24           Mississippi  58.27  40.41    0.93      1.54    19.99   
+18             Louisiana  66.33  31.71    1.39      2.02    19.13   
+31            New Mexico  88.49   1.65    8.95     43.44    18.88   
+3               Arkansas  82.09  15.91    1.14      3.68    17.79   
+8   District of Columbia  38.00  57.00    3.50      8.40    17.50   
+0                Alabama  69.80  28.51    1.03      2.10    17.09   
+48         West Virginia  96.91   1.94    0.58      0.71    16.98   
+17              Kentucky  95.11   3.67    0.61      1.41    16.85   
+2                Arizona  81.09   1.89   15.95     27.88    16.84   
+43                 Texas  91.00   6.85    1.59     29.68    16.79   
+
+    Total_Births  Total_Deaths  
+24       2981.57       2070.85  
+18       4446.41       2922.33  
+31       3604.24       1961.48  
+3        2790.69       2290.09  
+8       22742.00      17375.00  
+0        4014.48       3128.52  
+48       2114.44       2166.55  
+17       2574.76       1948.45  
+2       18697.47       8965.07  
+43       5327.55       2551.31  
+
+ The graph for the same can be depicted as: 
+
+
+ The total number of deaths in a particular county. The data is distributed and related on basis of raceof an individual 
+
+
+States with highest number of deaths (race-wise distribution) : 
+
+---------------------------------------------------------------------
+
+
+         CHSI_State_Name  Black  White  Others  Hispanic  Total_Deaths
+8   District of Columbia  57.00  38.00    3.50      8.40       17375.0
+4             California   3.63  85.09    8.92     25.20       12583.0
+21         Massachusetts   6.03  89.23    3.56      6.11       12337.0
+6            Connecticut   6.80  88.80    3.05      7.66       11197.0
+30            New Jersey  12.85  80.08    5.89     12.67       10869.0
+2                Arizona   1.89  81.09   15.95     27.88        8965.0
+32              New York   6.56  89.66    2.80      5.78        8317.0
+9                Florida  14.37  82.72    1.96     10.47        8121.0
+7               Delaware  19.53  76.50    2.63      5.37        7014.0
+39          Rhode Island   3.30  92.86    2.60      4.96        6557.0
+
+States with lowest number of deaths (race-wise distribution) : 
+
+---------------------------------------------------------------------
+
+
+   CHSI_State_Name  Black  White  Others  Hispanic  Total_Deaths
+45         Vermont   0.51  97.31    1.16      0.96        1786.0
+5         Colorado   1.46  95.18    2.49     17.45        1701.0
+16          Kansas   1.89  95.71    1.56      6.72        1365.0
+12           Idaho   0.41  96.49    2.22      9.75        1315.0
+50         Wyoming   0.46  96.37    2.31      5.63        1150.0
+27        Nebraska   0.49  97.27    1.82      4.13        1065.0
+26         Montana   0.21  90.76    8.05      1.74         976.0
+34    North Dakota   0.30  92.49    6.73      1.21         903.0
+41    South Dakota   0.29  84.97   14.04      1.29         835.0
+1           Alaska   1.17  54.49   41.01      3.67         605.0
+
+The plot for the above analysis is as follows: 
+
+
+
+ The mortality rate and Poverty analysis based on various risk factors like premature birth, birth to females both below age 18 and above 40, etc. for different counties in each state. These values show the top 5 counties for the given analysis. 
+
+---------------------------------------------------------------------
+
+     CHSI_County_Name CHSI_State_Name  Premature  Under_18  Over_40  \
+2734            Starr           Texas       11.1       8.8      1.2   
+2415          Shannon    South Dakota       14.0       9.3      1.1   
+1128     East Carroll       Louisiana       15.3      12.7      1.6   
+2419             Todd    South Dakota       12.3       9.2      0.6   
+2425          Ziebach    South Dakota       13.7       8.6      1.5   
+
+      Late_Care  Birth_Death_Ratio  LBW_VLBW  Poverty  Population_Size  
+2734       30.2          18.293515       7.3     36.2            60941  
+2415       36.6          34.054535       8.7     35.6            13657  
+1128       31.8          67.800882      12.1     33.9             8756  
+2419       42.5          28.526399       7.1     33.7             9882  
+2425       37.7          35.452323       7.6     33.0             2631  
+
+The mortality rate and Poverty analysis based on various risk factors like premature birth, birth to females both below age 18 and above 40, etc. for different counties in each state. These values show the lowest 5 counties for the given analysis.
+---------------------------------------------------------------------
+
+       CHSI_County_Name CHSI_State_Name  Premature  Under_18  Over_40  \
+1781          Hunterdon      New Jersey        9.9       0.3      7.6   
+1808         Los Alamos      New Mexico       10.5       1.2      5.1   
+2924  Falls Church City        Virginia        9.7       1.1      6.1   
+260             Douglas        Colorado       11.3       0.6      3.6   
+546             Kalawao          Hawaii        NaN       NaN      NaN   
+
+      Late_Care  Birth_Death_Ratio  LBW_VLBW  Poverty  Population_Size  
+1781        9.7          55.910543       7.2      3.5           130404  
+1808       12.4          51.385259       9.1      3.0            18822  
+2924       10.7          42.336549       7.7      3.0            10781  
+260         4.9          13.597929      10.0      2.2           249416  
+546        22.0          60.975610       NaN      NaN              111  
+
+ The graph demontrating the above analysis: 
+
+
+ The ratio of population to poverty for every state has been analysed. The analysis is as follows: 
+
+---------------------------------------------------------------------
+
+         CHSI_State_Name  Population_Size  Poverty  Pop_Poverty_ratio
+41          South Dakota         11756.56    14.13             832.28
+34          North Dakota         12012.77    11.43            1050.97
+26               Montana         16708.39    14.84            1125.96
+24           Mississippi         35623.02    19.99            1781.91
+27              Nebraska         18911.69    10.56            1790.30
+48         West Virginia         33033.75    16.98            1945.45
+1                 Alaska         24580.04    12.14            2023.97
+50               Wyoming         22143.22    10.83            2043.72
+17              Kentucky         34778.38    16.85            2064.10
+3               Arkansas         37055.39    17.79            2082.54
+16                Kansas         26139.88    10.95            2388.14
+12                 Idaho         32479.45    12.35            2628.95
+36              Oklahoma         46076.42    15.57            2958.79
+31            New Mexico         58435.88    18.88            3094.33
+15                  Iowa         29962.97     9.05            3311.75
+10               Georgia         57060.23    16.04            3557.18
+18             Louisiana         70681.69    19.13            3694.87
+25              Missouri         50437.48    13.38            3768.64
+0                Alabama         68026.99    17.09            3981.66
+42             Tennessee         62767.99    14.37            4367.83
+45               Vermont         44503.57     9.64            4618.61
+46              Virginia         56473.62    11.98            4713.17
+43                 Texas         89999.87    16.79            5359.27
+40        South Carolina         92501.80    15.82            5846.50
+33        North Carolina         86832.42    14.59            5952.32
+5               Colorado         72893.39    11.69            6234.37
+23             Minnesota         58997.69     8.53            6918.45
+19                 Maine         82594.06    11.56            7143.27
+14               Indiana         68173.62     9.23            7384.00
+44                  Utah         85158.10    10.74            7925.50
+37                Oregon        101140.44    12.70            7962.07
+49             Wisconsin         76891.68     8.49            9059.40
+22              Michigan        121938.07    10.80           11294.34
+13              Illinois        125131.09    10.74           11646.47
+47            Washington        161224.59    12.67           12728.26
+35                  Ohio        130273.20    10.17           12807.55
+28                Nevada        142047.47    10.84           13102.59
+38          Pennsylvania        185516.66    10.45           17751.52
+29         New Hampshire        130994.00     7.19           18218.92
+9                Florida        265520.36    13.81           19223.97
+2                Arizona        395952.80    16.84           23512.64
+20              Maryland        233349.50     9.33           25024.08
+39          Rhode Island        215237.80     8.44           25502.11
+32              New York        310558.55    12.05           25769.04
+11                Hawaii        318770.75    11.08           28782.91
+7               Delaware        281174.67     9.60           29289.03
+8   District of Columbia        550521.00    17.50           31458.34
+4             California        622968.05    12.87           48408.56
+30            New Jersey        415139.29     8.54           48594.90
+21         Massachusetts        457053.07     9.13           50068.41
+6            Connecticut        438787.12     7.06           62129.15
+         CHSI_State_Name  Poverty  No_Exercise  Obesity  Few_Fruit_Veg  \
+24           Mississippi    19.99        32.77    28.75          83.76   
+18             Louisiana    19.13        35.48    27.69          84.09   
+31            New Mexico    18.88        25.77    21.59          79.15   
+3               Arkansas    17.79        31.26    25.74          80.21   
+8   District of Columbia    17.50        22.20    21.30          68.10   
+
+    Smoker  Diabetes  High_Blood_Pres  Mortality_Rate  
+24   24.73      9.96            31.77            5.81  
+18   24.64      8.70            29.58            4.13  
+31   22.71      7.45            22.45            3.36  
+3    26.57      8.18            28.80            6.18  
+8    20.40      7.80            26.70            3.16  
+         CHSI_State_Name  Poverty  Uninsured  Elderly_Medicare  \
+24           Mississippi    19.99    5856.51           4091.61   
+18             Louisiana    19.13   11561.03           7870.17   
+31            New Mexico    18.88   12929.42           6393.27   
+3               Arkansas    17.79    5683.59           4830.21   
+8   District of Columbia    17.50        NaN          63403.00   
+
+    Disabled_Medicare  Late_Care  Prim_Care_Phys_Rate  Mortality_Rate  
+24            1233.07      19.06                45.26            5.81  
+18            1818.36      18.35                52.96            4.13  
+31            1180.94      31.80                57.00            3.36  
+3             1202.89      22.71                52.07            6.18  
+8            10262.00      24.30               227.60            3.16  
+
+ The correlation between various risk factors, poverty
+
+
+ The mortality rate based on genetic defects has been analyzed. The analysis can be demonstrated as: 
+
+---------------------------------------------------------------------
+
+
+                  A_Wh_BirthDef  A_Bl_BirthDef  A_Ot_BirthDef  A_Hi_BirthDef  \
+CHSI_State_Name                                                               
+Idaho                      377              0              0             43   
+New Mexico                 278              0             26            119   
+Alaska                     120              0             70              0   
+Alabama                    611            273              0              0   
+Louisiana                  565            357              0              0   
+Mississippi                308            434              0              0   
+Indiana                    985             42              0             15   
+Montana                    185              0             14              0   
+North Carolina            1033            206             16             52   
+Tennessee                  794             63              0             85   
+
+                 Mortality_Rate  
+CHSI_State_Name                  
+Idaho                  0.359481  
+New Mexico             0.355641  
+Alaska                 0.348829  
+Alabama                0.328661  
+Louisiana              0.323998  
+Mississippi            0.303490  
+Indiana                0.292475  
+Montana                0.283161  
+North Carolina         0.282998  
+Tennessee              0.276565  
+
+ This analysis is based on how pollution(AQI index) adds to cause of fata diseases in different counties. The analysis can be demonstrated as: 
+
+---------------------------------------------------------------------
+
+       County       State  Mortality_Rate  Max AQI  Unhealthy Days  \
+210    Hawaii      Hawaii            2.25      532             244   
+70       Mono  California            3.81     4240               5   
+563  Dona Ana  New Mexico            1.86      671               1   
+60       Inyo  California           12.28     4466               1   
+569      Luna  New Mexico            9.33      420               0   
+
+     Very Unhealthy Days  Hazardous Days  
+210                   16               5  
+70                     1               3  
+563                    0               3  
+60                     6               2  
+569                    0               2  
+The graphical representation of the data is done as follows: 
+
+
+ This analysis provides information about the total number of cases of fatal diseases like various types of cancer due to pollution and toxic chemicals for each county. This can be shown as : 
+
+---------------------------------------------------------------------
+
+        County      State  Population_Size  Lung_Cancer_d  Brst_cancer_d  \
+780  Salt Lake       Utah           948172          248.0          221.0   
+752     Harris      Texas          3693050         2016.0         1019.0   
+458       Elko     Nevada            45570           25.0            8.0   
+235       Lake    Indiana           493297          304.0          164.0   
+741   Brazoria      Texas           278484          189.0           81.0   
+22        Gila    Arizona            51663           26.0           18.0   
+124   Escambia    Florida           296772          202.0           75.0   
+720  Humphreys  Tennessee            18212           14.0            5.0   
+590  Jefferson       Ohio            70599           48.0           23.0   
+596      Lucas       Ohio           448229          292.0          114.0   
+
+     Col_cancer_d  Total_cancer_deaths  Toxic_Chem  Max AQI  
+780         130.0                599.0   127940203      501  
+752         709.0               3744.0    55707549      179  
+458          12.0                 45.0    53239355      139  
+235         117.0                585.0    50248279      133  
+741          63.0                333.0    41825219      172  
+22           11.0                 55.0    40671487      200  
+124          58.0                335.0    40475023      156  
+720           5.0                 24.0    38064001       85  
+590          17.0                 88.0    37912313      152  
+596          96.0                502.0    37888409      164  
+
+ The plot to demonstrate the above analysis is as follows: 
+
+
+ This analysis shows the mortality rate based on various other human-centric factors. The analysis is done for each county.
+
+---------------------------------------------------------------------
+
+     CHSI_County_Name CHSI_State_Name  Major_Depression  Unemployed  \
+1053            Starr           Texas              2727        2764   
+924           Shannon    South Dakota               585         457   
+452      East Carroll       Louisiana               442         399   
+925              Todd    South Dakota               424         221   
+1151         McDowell   West Virginia              1822         558   
+556            Holmes     Mississippi              1135         914   
+1014          Hidalgo           Texas             30994       20096   
+675          McKinley      New Mexico              3958        2049   
+588         Sunflower     Mississippi              1846        1287   
+406              Clay        Kentucky              1588         657   
+
+      Recent_Drug_Use  Deaths_Suicide  Deaths_Homicide  Poverty Ratio  
+1053             2614             4.0              6.0      36.200587  
+924               554             4.0              3.0      35.600791  
+452               503             1.0              2.0      33.896757  
+925               382             3.0              2.0      33.697632  
+1151             1008             4.0              4.0      32.398138  
+556              1050             2.0              6.0      32.200578  
+1014            29349            35.0             43.0      30.999963  
+675              4581            14.0              8.0      30.600128  
+588              1653             3.0              3.0      30.299279  
+406              1371             2.0              3.0      30.299014  
+     CHSI_County_Name CHSI_State_Name  Age_19_Under  Age_19_64  Age_65_84  \
+2680            Starr           Texas          38.2       51.7        9.0   
+2575          Shannon    South Dakota          43.7       51.2        4.9   
+837      East Carroll       Louisiana          29.8       58.0       10.6   
+2801             Todd    South Dakota          43.4       50.8        5.2   
+3140          Ziebach    South Dakota          36.5       56.3        6.3   
+3139           Zavala           Texas          33.1       55.7        9.9   
+1851         McDowell   West Virginia          22.1       62.3       13.6   
+1280           Holmes     Mississippi          32.6       56.0        9.7   
+2175           Owsley        Kentucky          22.7       61.5       13.7   
+1263          Hidalgo           Texas          36.8       54.0        8.2   
+
+      Age_85_and_Over  Poverty  
+2680              1.1     36.2  
+2575              0.2     35.6  
+837               1.6     33.9  
+2801              0.6     33.7  
+3140              0.9     33.0  
+3139              1.4     32.7  
+1851              2.0     32.4  
+1280              1.7     32.2  
+2175              2.1     31.9  
+1263              1.1     31.0  
+       CHSI_County_Name CHSI_State_Name  Age_19_Under  Age_19_64  Age_65_84  \
+415              Carver       Minnesota          28.5       64.1        6.2   
+2549              Scott       Minnesota          29.2       64.8        5.2   
+1713            Loudoun        Virginia          29.7       65.0        4.7   
+1159           Hamilton         Indiana          29.9       62.5        6.7   
+2179            Ozaukee       Wisconsin          24.6       61.8       11.7   
+1320          Hunterdon      New Jersey          25.2       63.8        9.6   
+1710         Los Alamos      New Mexico          23.2       64.4       11.2   
+904   Falls Church City        Virginia          22.9       63.9        9.9   
+806             Douglas        Colorado          30.0       65.3        4.4   
+1461            Kalawao          Hawaii           1.4       82.3       11.7   
+
+      Age_85_and_Over  Poverty  
+415               1.2      4.0  
+2549              0.8      3.8  
+1713              0.6      3.7  
+1159              0.9      3.6  
+2179              2.0      3.6  
+1320              1.4      3.5  
+1710              1.2      3.0  
+904               3.3      3.0  
+806               0.4      2.2  
+1461              4.5      NaN  
+
+ The analysis shows state wise output for percent of population for Age_85_and_Over is slightly greater in top 10 states with Low Poverty index as compared to that of states with high poverty index. The analysis can be demonstrated as: 
+
+---------------------------------------------------------------------
+
+         CHSI_State_Name  Age_19_Under  Age_19_64  Age_65_84  Age_85_and_Over  \
+24           Mississippi         27.00      59.93      11.50             1.58   
+18             Louisiana         26.65      60.83      11.03             1.49   
+31            New Mexico         25.44      59.31      13.34             1.90   
+3               Arkansas         24.88      59.60      13.49             2.03   
+8   District of Columbia         21.50      66.30      10.50             1.80   
+0                Alabama         25.22      60.66      12.47             1.67   
+48         West Virginia         22.06      62.23      13.90             1.81   
+17              Kentucky         24.32      62.29      11.86             1.53   
+2                Arizona         28.15      56.52      13.71             1.62   
+43                 Texas         26.75      58.18      13.13             1.94   
+
+    Poverty  
+24    19.99  
+18    19.13  
+31    18.88  
+3     17.79  
+8     17.50  
+0     17.09  
+48    16.98  
+17    16.85  
+2     16.84  
+43    16.79  
+---------------------------------------------------------------------
+
+Analysis Complete
+
+Process finished with exit code 0
